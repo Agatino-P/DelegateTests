@@ -6,8 +6,8 @@ namespace DelegateTests.Controllers;
 [Route("/")]
 public class WeatherForecastController : ControllerBase
 {
-    private static  MyCalcDel One = new(() => 1);
-    private static MyCalcDel Two = () => 2;
+    private static  MyCalcDel One = new((b) => b*1);
+    private static MyCalcDel Two = (b) => 2*b;
 
     private static Dictionary<int,MyCalcDel> delegates = new Dictionary<int,MyCalcDel>()
     {
@@ -18,11 +18,11 @@ public class WeatherForecastController : ControllerBase
 
 
     [HttpGet(Name = "GetWeatherForecast")]
-    public ActionResult Get(int a)
+    public ActionResult Get(int a, int b)
     {
-        return Ok(delegates[a]());
+        return Ok(delegates[a](b));
     }
 }
 
 
-delegate int MyCalcDel();
+delegate int MyCalcDel(int b);
